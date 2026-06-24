@@ -1,0 +1,297 @@
+/* Javi — UI styles. Theme tokens are injected as CSS custom properties on
+   :root by src/ui/themes.js; everything below reads them via var(). */
+
+:root {
+  color-scheme: dark;
+  /* Fallback theme values (coral) until themes.init() runs. */
+  --bg: radial-gradient(132% 100% at 50% 22%, #321d1f 0%, #1c1012 58%, #140b0c 100%);
+  --word: #f6dcd4;
+  --sc: #a8847e;
+  --dot: #f08a7e;
+  --orb-color: #f4a99c;
+  --orb-glow: rgba(240, 138, 126, 0.6);
+  --haze: rgba(240, 138, 126, 0.34);
+  --seg-bg: rgba(56, 32, 30, 0.5);
+  --seg-bd: rgba(240, 150, 138, 0.18);
+  --ib: rgba(56, 32, 30, 0.5);
+  --ibd: rgba(240, 150, 138, 0.22);
+  --accent: #f29385;
+  --accent2: #d9604f;
+  --accent-ink: #2c1311;
+  --accent-grad: linear-gradient(135deg, #f29385, #d9604f);
+  --mic-bg-idle: rgba(242, 147, 133, 0.14);
+  --mic-ring: rgba(242, 147, 133, 0.18);
+  --send-bg-idle: rgba(242, 147, 133, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  transition: background 0.8s ease;
+  color: var(--word);
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── header ───────────────────────────────────────────────────────────────── */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 30px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--word);
+}
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-left: 6px;
+  font-size: 11px;
+  color: var(--sc);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--dot);
+  box-shadow: 0 0 10px var(--dot);
+  animation: blink 2.2s ease-in-out infinite;
+}
+.status-dot.error {
+  background: #e0604f;
+  box-shadow: 0 0 10px #e0604f;
+}
+
+.swatches {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.swatch {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.swatch.active {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.45), 0 0 0 4px currentColor;
+}
+
+/* ── center stage ─────────────────────────────────────────────────────────── */
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 34px;
+  padding: 10px 24px;
+}
+.caption {
+  max-width: 680px;
+  text-align: center;
+  font-family: 'Instrument Serif', serif;
+  font-style: italic;
+  font-size: 26px;
+  line-height: 1.35;
+  color: var(--word);
+  padding: 0 8px;
+}
+.caption.flash {
+  animation: fadeup 0.5s ease;
+}
+
+/* ── orb (DOM particle field) ─────────────────────────────────────────────── */
+.orb-stage {
+  position: relative;
+  width: 300px;
+  height: 270px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.orb-haze {
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--haze) 0%, transparent 68%);
+  filter: blur(10px);
+  opacity: calc(0.6 + var(--orb-energy, 0) * 0.5);
+}
+.orb-box {
+  position: relative;
+  width: 200px;
+  height: 180px;
+  transform: scale(calc(1.45 + var(--orb-energy, 0) * 0.18));
+}
+.orb-spin {
+  position: absolute;
+  inset: 0;
+}
+.orb-p {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--orb-color);
+  animation-name: vibe;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+/* ── bottom dock ──────────────────────────────────────────────────────────── */
+.dock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 0 24px 34px;
+}
+.segmented {
+  display: flex;
+  gap: 8px;
+  padding: 5px;
+  border-radius: 14px;
+  background: var(--seg-bg);
+  border: 1px solid var(--seg-bd);
+}
+.seg {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--sc);
+  background: transparent;
+  transition: all 0.25s;
+}
+.seg.static {
+  cursor: default;
+}
+.seg.active {
+  background: var(--accent-grad);
+  color: var(--accent-ink);
+}
+
+.inputbar {
+  width: 100%;
+  max-width: 660px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  height: 60px;
+  border-radius: 18px;
+  background: var(--ib);
+  border: 1px solid var(--ibd);
+  padding: 0 9px;
+  backdrop-filter: blur(8px);
+}
+#input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--word);
+}
+#input::placeholder {
+  color: var(--sc);
+}
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 13px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.icon-btn.mic {
+  background: var(--mic-bg-idle);
+  color: var(--accent);
+}
+.icon-btn.mic.active {
+  background: var(--accent-grad);
+  color: var(--accent-ink);
+  box-shadow: 0 0 0 4px var(--mic-ring);
+}
+.icon-btn.send {
+  background: var(--send-bg-idle);
+  color: var(--accent);
+}
+.icon-btn.send.active {
+  background: var(--accent-grad);
+  color: var(--accent-ink);
+}
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── animations (ported from the design) ──────────────────────────────────── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+@keyframes orb-rotate {
+  to { transform: rotate(360deg); }
+}
+@keyframes vibe {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  25% { transform: translate(1px, -1.2px) scale(1.22); opacity: 0.95; }
+  50% { transform: translate(-0.8px, 0.9px) scale(0.86); opacity: 0.42; }
+  75% { transform: translate(0.7px, 0.8px) scale(1.12); opacity: 0.8; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+}
+@keyframes fadeup {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 560px) {
+  .topbar { padding: 18px 20px; }
+  .orb-stage { transform: scale(0.85); }
+  .segmented { flex-wrap: wrap; justify-content: center; }
+}
