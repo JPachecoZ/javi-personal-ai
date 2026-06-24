@@ -29,10 +29,25 @@
       <div class="caption flash" id="caption">Aquí estoy cuando me necesites</div>
     </main>
 
-    <footer class="dock">
-      <div class="segmented" id="segmented"></div>
+    <footer class="dock" id="dock">
+      <!-- Collapsible panel: states + text input. Slides up when revealed. -->
+      <div class="dock-panel" id="dockPanel">
+        <div class="dock-panel-inner">
+          <div class="segmented" id="segmented"></div>
+          <div class="inputbar">
+            <input id="input" type="text" placeholder="Habla o escribe a Javi…" autocomplete="off" />
+            <button class="icon-btn send" id="sendBtn" title="Enviar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="19" x2="12" y2="5" />
+                <polyline points="6 11 12 5 18 11" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
 
-      <div class="inputbar">
+      <!-- Always-visible bar: mic to interact + arrow to reveal the panel. -->
+      <div class="dock-bar">
         <button class="icon-btn mic" id="micBtn" title="Hablar">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
             <rect x="9" y="2" width="6" height="12" rx="3" />
@@ -40,11 +55,9 @@
             <line x1="12" y1="18" x2="12" y2="22" />
           </svg>
         </button>
-        <input id="input" type="text" placeholder="Habla o escribe a Javi…" autocomplete="off" />
-        <button class="icon-btn send" id="sendBtn" title="Enviar">
+        <button class="icon-btn reveal" id="revealBtn" title="Mostrar controles" aria-expanded="false">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="19" x2="12" y2="5" />
-            <polyline points="6 11 12 5 18 11" />
+            <polyline points="6 15 12 9 18 15" />
           </svg>
         </button>
       </div>

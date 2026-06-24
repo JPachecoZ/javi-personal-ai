@@ -9,7 +9,7 @@
  * display-only — they light up when Javi is in that state but aren't clickable.
  */
 export function createControls(
-  { segmented, micBtn, input, sendBtn },
+  { segmented, micBtn, input, sendBtn, dock, revealBtn },
   { states, sttAvailable, onSegment, onMicToggle, onSend, onInput }
 ) {
   const segEls = {};
@@ -22,6 +22,15 @@ export function createControls(
     segmented.appendChild(el);
     segEls[s.key] = el;
   }
+
+  // Dock reveal/collapse — pure local view state (per ADR-001, kept out of the
+  // conversational state machine). Toggles a class; CSS handles the slide.
+  revealBtn.addEventListener('click', () => {
+    const expanded = dock.classList.toggle('expanded');
+    revealBtn.setAttribute('aria-expanded', String(expanded));
+    revealBtn.title = expanded ? 'Ocultar controles' : 'Mostrar controles';
+    if (expanded) input.focus();
+  });
 
   sendBtn.addEventListener('click', () => onSend(input.value));
   input.addEventListener('keydown', (e) => {

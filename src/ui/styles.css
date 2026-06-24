@@ -171,14 +171,58 @@ body {
   animation-iteration-count: infinite;
 }
 
-/* ── bottom dock ──────────────────────────────────────────────────────────── */
+/* ── bottom dock (collapsible) ────────────────────────────────────────────── */
 .dock {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
-  padding: 0 24px 34px;
+  gap: 14px;
+  padding: 0 24px 28px;
 }
+
+/* Collapsible panel: animates its own height via the grid 0fr→1fr trick
+   (smooth auto-height with no JS measuring), plus a slide + fade. */
+.dock-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  opacity: 0;
+  transition: grid-template-rows 0.28s ease, opacity 0.28s ease;
+}
+.dock.expanded .dock-panel {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.dock-panel-inner {
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  transform: translateY(10px);
+  transition: transform 0.28s ease;
+}
+.dock.expanded .dock-panel-inner {
+  transform: translateY(0);
+}
+
+.dock-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.icon-btn.reveal {
+  background: var(--mic-bg-idle);
+  color: var(--accent);
+}
+.icon-btn.reveal svg {
+  transition: transform 0.28s ease;
+}
+.dock.expanded .icon-btn.reveal svg {
+  transform: rotate(180deg);
+}
+
 .segmented {
   display: flex;
   gap: 8px;
@@ -294,4 +338,13 @@ body {
   .topbar { padding: 18px 20px; }
   .orb-stage { transform: scale(0.85); }
   .segmented { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ── accessibility: honor reduced-motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .dock-panel,
+  .dock-panel-inner,
+  .icon-btn.reveal svg {
+    transition: none;
+  }
 }

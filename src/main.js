@@ -86,7 +86,14 @@ const stt = createSTT({
 
 /* ── UI ───────────────────────────────────────────────────────────────────── */
 const controls = createControls(
-  { segmented: $('segmented'), micBtn: $('micBtn'), input: $('input'), sendBtn: $('sendBtn') },
+  {
+    segmented: $('segmented'),
+    micBtn: $('micBtn'),
+    input: $('input'),
+    sendBtn: $('sendBtn'),
+    dock: $('dock'),
+    revealBtn: $('revealBtn'),
+  },
   {
     sttAvailable: !!stt,
     states: [
