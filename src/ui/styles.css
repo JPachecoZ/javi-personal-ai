@@ -161,11 +161,33 @@ body {
 .orb-spin {
   position: absolute;
   inset: 0;
+  /* Single constant rotation for every state (ADR-001) — changing speed per
+     state would reset the angle and cause a visible jump. */
+  animation: orb-rotate 64s linear infinite;
 }
+/* Outer wrapper: position + size. This is what morphs between shapes — a CSS
+   transition glides translate/scale to the new target on state change. */
 .orb-p {
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  transform: translate(100px, 90px) scale(0);
+  opacity: 0;
+  transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.35s ease;
+}
+/* Inner dot: the continuous wobble + glow. Centered on the wrapper origin so
+   the wrapper's scale resizes it. Its transform is independent of the morph. */
+.orb-p i {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: var(--orb-color);
+  box-shadow: 0 0 6px var(--orb-glow);
   animation-name: vibe;
   animation-timing-function: ease-in-out;
   animation-iteration-count: infinite;
@@ -344,7 +366,12 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .dock-panel,
   .dock-panel-inner,
-  .icon-btn.reveal svg {
+  .icon-btn.reveal svg,
+  .orb-p {
     transition: none;
+  }
+  .orb-spin,
+  .orb-p i {
+    animation: none;
   }
 }
