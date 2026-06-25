@@ -5,7 +5,7 @@
  * through `onLevel`. This drives the orb while the USER is talking.
  *
  * Phase 2 note: this same AnalyserNode pattern will be reused to tap Piper's
- * playback audio so the orb reacts with real FFT while JARVIS speaks too.
+ * playback audio so the orb reacts with real FFT while Javi speaks too.
  */
 export function createMicMeter({ onLevel }) {
   let audioCtx = null;

@@ -4,7 +4,7 @@
  * Sentences are queued so streamed chunks from the model don't overlap. Word
  * `boundary` events are surfaced via `onBoundary` because speechSynthesis does
  * NOT expose its audio to the Web Audio API — so we can't FFT it. Those
- * boundary pulses are what animate the orb while JARVIS speaks.
+ * boundary pulses are what animate the orb while Javi speaks.
  *
  * Phase 2 will introduce a Piper-backed TTS with the same public shape
  * (speak / cancel / setEnabled), but whose audio CAN be FFT-analysed, letting

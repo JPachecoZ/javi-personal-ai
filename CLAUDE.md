@@ -1,7 +1,7 @@
 # Javi — Local Voice AI Orchestrator
 
-> Nota: el proyecto se llamaba "JARVIS" y se renombró a **Javi**. La carpeta sigue
-> siendo `jarvis/` para no romper rutas/git; el producto es Javi.
+> Nota: el proyecto se llamaba "JARVIS" y se renombró a **Javi** (carpeta `javi/`).
+> El prototipo original de un solo archivo se conserva en `legacy/jarvis.html`.
 
 ## Qué es este proyecto
 

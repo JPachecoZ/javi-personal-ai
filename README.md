@@ -69,7 +69,7 @@ npm test         # vitest (state machine)
 ## Project structure
 
 ```
-jarvis/                      # folder name kept; product is "Javi"
+javi/
 ├── index.html               # markup only; loads /src/main.js as a module
 ├── config.js                # Ollama host/model, default theme, voice, prompt, flags
 ├── src/
